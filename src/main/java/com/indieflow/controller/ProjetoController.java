@@ -3,6 +3,7 @@ package com.indieflow.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.indieflow.dto.projeto.ProjetoRequestDTO;
 import com.indieflow.dto.projeto.ProjetoResponseDTO;
 import com.indieflow.enums.StatusProjeto;
 import com.indieflow.model.Projeto;
@@ -47,8 +49,9 @@ public class ProjetoController {
 
     @PostMapping 
     @ResponseStatus (HttpStatus.CREATED)
-    public ProjetoResponseDTO iniciarProjeto(@RequestBody Projeto projeto){
-        return ProjetoResponseDTO.from(projetoService.iniciarProjeto(projeto));
+    public ResponseEntity<ProjetoResponseDTO> iniciarProjeto(@RequestBody ProjetoRequestDTO dto){
+        Projeto projeto = projetoService.iniciarProjeto(dto);
+        return ResponseEntity.status(201).body(ProjetoResponseDTO.from(projeto));
     }
 
     @PutMapping ("/{id}/concluir")

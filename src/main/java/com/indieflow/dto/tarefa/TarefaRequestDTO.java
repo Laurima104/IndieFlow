@@ -12,7 +12,6 @@ public record TarefaRequestDTO(
         @NotBlank @Size(max = 100) String titulo,
         @Size(max = 500) String descricao,
         @NotNull Prioridade prioridade,
-        @NotNull StatusTarefa status,
         LocalDate prazo,
         @NotNull @Positive Long projetoId) {
 }

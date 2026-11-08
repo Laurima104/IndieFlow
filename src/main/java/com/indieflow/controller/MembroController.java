@@ -23,7 +23,7 @@ public class MembroController {
     }
 
     @GetMapping("/{id}")
-    public MembroResponseDTO buscar(@PathVariable Long id) {
+    public MembroResponseDTO buscar(@PathVariable(name="id") Long id) {
         return MembroResponseDTO.from(service.buscarPorId(id));
     }
 
@@ -34,13 +34,13 @@ public class MembroController {
     }
 
     @PutMapping("/{id}")
-    public MembroResponseDTO atualizar(@PathVariable Long id, @Valid @RequestBody MembroRequestDTO dto) {
+    public MembroResponseDTO atualizar(@PathVariable(name="id") Long id, @Valid @RequestBody MembroRequestDTO dto) {
         return MembroResponseDTO.from(service.atualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void excluir(@PathVariable Long id) {
+    public void excluir(@PathVariable(name="id") Long id) {
         service.excluir(id);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.indieflow.dto.projeto.ProjetoRequestDTO;
 import com.indieflow.enums.StatusProjeto;
 import com.indieflow.enums.StatusTarefa;
 import com.indieflow.model.Projeto;
@@ -16,14 +17,16 @@ import com.indieflow.repository.ProjetoRepository;
 @Service 
 public class ProjetoService {
     private final ProjetoRepository projetoRepository;
-    private final TarefaService tarefaService;
-    public ProjetoService(ProjetoRepository projetoRepository, TarefaService tarefaService){
+    public ProjetoService(ProjetoRepository projetoRepository){
         this.projetoRepository = projetoRepository;
-        this.tarefaService=tarefaService;
     }
 
     public List<Projeto> listarTodos(){
         return projetoRepository.findAll();
+    }
+
+    public List<Tarefa> listaTarefas(Long id){
+        return projetoRepository.findTarefasByProjeto(id);
     }
 
     public Projeto buscarPorId(Long id){
@@ -37,7 +40,11 @@ public class ProjetoService {
         return projetoRepository.findByStatus(status);
     }
 
-    public Projeto iniciarProjeto(Projeto projeto){
+    public Projeto iniciarProjeto(ProjetoRequestDTO dto){
+        Projeto projeto = new Projeto();
+        projeto.setNome(dto.nome());
+        projeto.setDescricao(dto.descricao());
+        projeto.setGenero(dto.genero());
         projeto.setDataInicio(LocalDate.now());
         projeto.setStatus(StatusProjeto.PLANEJAMENTO);
         return projetoRepository.save(projeto);
@@ -87,7 +94,7 @@ public class ProjetoService {
     public Projeto finalizarProjeto(Long projeto_id){
         Projeto projeto = buscarPorId(projeto_id);
         validarProjetoFinalizadoOuCancelado(projeto);
-        validarTarefasConcluidas(tarefaService.listarPorProjeto(projeto_id));
+        validarTarefasConcluidas(listaTarefas(projeto_id));
 
         projeto.setStatus(StatusProjeto.CONCLUIDO);
         return projetoRepository.save(projeto);

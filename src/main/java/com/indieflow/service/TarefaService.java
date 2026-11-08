@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.indieflow.dto.tarefa.TarefaRequestDTO;
 import com.indieflow.enums.Prioridade;
 import com.indieflow.enums.StatusTarefa;
 import com.indieflow.model.Membro;
@@ -16,9 +17,11 @@ import com.indieflow.repository.TarefaRepository;
 public class TarefaService {
     private final TarefaRepository tarefaRepository;
     private final MembroService membroService;
-    public TarefaService(TarefaRepository tarefaRepository, MembroService membroService){
+    private final ProjetoService projetoService;
+    public TarefaService(TarefaRepository tarefaRepository, MembroService membroService, ProjetoService projetoService){
         this.tarefaRepository = tarefaRepository;
         this.membroService = membroService;
+        this.projetoService = projetoService;
     }
 
     public List<Tarefa> listarTodos(){
@@ -48,7 +51,13 @@ public class TarefaService {
             ));
     }
 
-    public Tarefa abrirTarefa(Tarefa tarefa){
+    public Tarefa abrirTarefa(TarefaRequestDTO dto){
+        Tarefa tarefa = new Tarefa();
+        tarefa.setTitulo(dto.titulo());
+        tarefa.setDescricao(dto.descricao());
+        tarefa.setPrioridade(dto.prioridade());
+        tarefa.setProjeto(projetoService.buscarPorId(dto.projetoId()));
+        tarefa.setPrazo(dto.prazo());
         tarefa.setStatus(StatusTarefa.PENDENTE);
 
         return tarefaRepository.save(tarefa);
@@ -58,6 +67,7 @@ public class TarefaService {
         Tarefa tarefa = listarPorId(tarefa_id);
         Membro membro = membroService.buscarPorId(membro_id);
         
+        projetoService.desenvolverProjeto(tarefa.getProjeto().getId());
         tarefa.setMembro(membro);
         tarefa.setStatus(StatusTarefa.EM_ANDAMENTO);
         return tarefaRepository.save(tarefa);

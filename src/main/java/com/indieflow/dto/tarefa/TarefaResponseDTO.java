@@ -5,13 +5,12 @@ import com.indieflow.enums.Prioridade;
 import com.indieflow.enums.StatusTarefa;
 
 public record TarefaResponseDTO(Long id, String titulo, String descricao, Prioridade prioridade,
-                                StatusTarefa status, LocalDate prazo, Long membroId, String membroNome,
-                                Long projetoId, String projetoNome) {
+                                StatusTarefa status, LocalDate prazo, String membroNome,
+                                String projetoNome) {
     public static TarefaResponseDTO from(com.indieflow.model.Tarefa tarefa) {
         return new TarefaResponseDTO(tarefa.getId(), tarefa.getTitulo(), tarefa.getDescricao(),
                 tarefa.getPrioridade(), tarefa.getStatus(), tarefa.getPrazo(),
-                tarefa.getMembro() == null ? null : tarefa.getMembro().getId(),
                 tarefa.getMembro() == null ? null : tarefa.getMembro().getNome(),
-                tarefa.getProjeto().getId(), tarefa.getProjeto().getNome());
+                tarefa.getProjeto().getNome());
     }
 }

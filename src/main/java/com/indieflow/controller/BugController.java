@@ -23,7 +23,7 @@ public class BugController {
     }
 
     @GetMapping("/{id}")
-    public BugResponseDTO buscar(@PathVariable Long id) {
+    public BugResponseDTO buscar(@PathVariable(name="id") Long id) {
         return BugResponseDTO.from(service.buscarPorId(id));
     }
 
@@ -34,13 +34,13 @@ public class BugController {
     }
 
     @PutMapping("/{id}")
-    public BugResponseDTO atualizar(@PathVariable Long id, @Valid @RequestBody BugRequestDTO dto) {
+    public BugResponseDTO atualizar(@PathVariable(name="id") Long id, @Valid @RequestBody BugRequestDTO dto) {
         return BugResponseDTO.from(service.atualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void excluir(@PathVariable Long id) {
+    public void excluir(@PathVariable(name="id") Long id) {
         service.excluir(id);
     }
 }

@@ -3,6 +3,7 @@ package com.indieflow.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.indieflow.dto.tarefa.TarefaRequestDTO;
 import com.indieflow.dto.tarefa.TarefaResponseDTO;
 import com.indieflow.enums.Prioridade;
 import com.indieflow.enums.StatusTarefa;
@@ -60,28 +62,29 @@ public class TarefaController {
     }
 
     @GetMapping ("/{id}")
-    public TarefaResponseDTO buscarPorId(@PathVariable Long id){
+    public TarefaResponseDTO buscarPorId(@PathVariable(name="id") Long id){
         return TarefaResponseDTO.from(tarefaService.listarPorId(id));
     }
 
     @PostMapping 
     @ResponseStatus (HttpStatus.CREATED)
-    public TarefaResponseDTO abrirTarefa(@RequestBody Tarefa tarefa){
-        return TarefaResponseDTO.from(tarefaService.abrirTarefa(tarefa));
+    public ResponseEntity<TarefaResponseDTO> abrirTarefa(@RequestBody TarefaRequestDTO dto){
+        Tarefa tarefa = tarefaService.abrirTarefa(dto);
+        return ResponseEntity.status(201).body(TarefaResponseDTO.from(tarefa));
     }
 
     @PutMapping ("/{id}/membro/{membro_id}")
-    public TarefaResponseDTO atribuirMembro(@PathVariable long id, @PathVariable Long membro_id){
+    public TarefaResponseDTO atribuirMembro(@PathVariable(name="id") long id, @PathVariable(name="membro_id") Long membro_id){
         return TarefaResponseDTO.from(tarefaService.atribuirMembro(id, membro_id));
     }
 
     @PutMapping ("/{id}/cancelar")
-    public TarefaResponseDTO cancelar(@PathVariable Long id){
+    public TarefaResponseDTO cancelar(@PathVariable(name="id") Long id){
         return TarefaResponseDTO.from(tarefaService.cancelarTarefa(id));
     }
 
     @PutMapping ("/{id}/concluir")
-    public TarefaResponseDTO concluir(@PathVariable long id){
+    public TarefaResponseDTO concluir(@PathVariable(name="id") long id){
         return TarefaResponseDTO.from(tarefaService.finalizarTarefa(id));
     }
 }
