@@ -1,16 +1,16 @@
 package com.indieflow.model;
 
 public class Membro {
-    private int id;
+    private Long id;
     private String nome;
     private String email;
     private String especialidade;
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

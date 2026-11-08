@@ -6,7 +6,7 @@ import com.indieflow.enums.Prioridade;
 import com.indieflow.enums.Status;
 
 public class Tarefa {
-    private int id;
+    private Long id;
     private String titulo;
     private String descricao;
     private Prioridade prioridade;
@@ -15,11 +15,11 @@ public class Tarefa {
     private Membro membro;
     private Projeto projeto;
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

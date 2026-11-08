@@ -5,18 +5,18 @@ import java.time.LocalDate;
 import com.indieflow.enums.Status;
 
 public class Projeto {
-    private int id;
+    private Long id;
     private String nome;
     private String descricao;
     private String genero;
     private Status status;
     private LocalDate data_inicio;
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
