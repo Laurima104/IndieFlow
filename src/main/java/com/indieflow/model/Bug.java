@@ -1,7 +1,7 @@
 package com.indieflow.model;
 
 import com.indieflow.enums.Gravidade;
-import com.indieflow.enums.Status;
+import com.indieflow.enums.StatusTarefa;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,7 +29,7 @@ public class Bug {
     private Gravidade gravidade;
     @Enumerated (EnumType.STRING)
     @Column (nullable = false, length = 20)
-    private Status status;
+    private StatusTarefa status;
     
     @ManyToOne 
     @JoinColumn (name="id_projeto", nullable = false)
@@ -67,11 +67,11 @@ public class Bug {
         return gravidade;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusTarefa status) {
         this.status = status;
     }
 
-    public Status getStatus() {
+    public StatusTarefa getStatus() {
         return status;
     }
 

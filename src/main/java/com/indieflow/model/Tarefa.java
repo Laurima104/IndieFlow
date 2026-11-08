@@ -3,14 +3,14 @@ package com.indieflow.model;
 import java.time.LocalDate;
 
 import com.indieflow.enums.Prioridade;
-import com.indieflow.enums.Status;
+import com.indieflow.enums.StatusTarefa;
 
 public class Tarefa {
     private Long id;
     private String titulo;
     private String descricao;
     private Prioridade prioridade;
-    private Status status;
+    private StatusTarefa status;
     private LocalDate prazo;
     private Membro membro;
     private Projeto projeto;
@@ -47,11 +47,11 @@ public class Tarefa {
         return prioridade;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusTarefa status) {
         this.status = status;
     }
 
-    public Status getStatus() {
+    public StatusTarefa getStatus() {
         return status;
     }
 
