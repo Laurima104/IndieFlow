@@ -5,5 +5,5 @@ public enum StatusProjeto {
     EM_DESENVOLVIMENTO,
     PAUSADO,
     CONCLUIDO,
-    CANCELADA
+    CANCELADO
 }

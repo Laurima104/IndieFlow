@@ -28,8 +28,8 @@ public class Projeto {
     @Enumerated (EnumType.STRING)
     @Column (nullable = false, length = 20)
     private StatusProjeto status;
-    @Column (nullable = false)
-    private LocalDate data_inicio;
+    @Column(name = "data_inicio", nullable = false)
+    private LocalDate dataInicio;
 
     public void setId(Long id) {
         this.id = id;
@@ -71,11 +71,11 @@ public class Projeto {
         return status;
     }
 
-    public void setData_inicio(LocalDate data_inicio) {
-        this.data_inicio = data_inicio;
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
     }
 
-    public LocalDate getData_inicio() {
-        return data_inicio;
+    public LocalDate getDataInicio() {
+        return dataInicio;
     }
 }
