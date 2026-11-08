@@ -14,6 +14,5 @@ public record TarefaRequestDTO(
         @NotNull Prioridade prioridade,
         @NotNull StatusTarefa status,
         LocalDate prazo,
-        @Positive Long membroId,
         @NotNull @Positive Long projetoId) {
 }

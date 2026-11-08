@@ -12,13 +12,35 @@ import jakarta.validation.Valid;
 @RequestMapping("/bugs")
 public class BugController {
     private final BugService service;
-    public BugController(BugService service) { this.service = service; }
 
-    @GetMapping public List<BugResponseDTO> listar() { return service.listarTodos().stream().map(BugResponseDTO::from).toList(); }
-    @GetMapping("/{id}") public BugResponseDTO buscar(@PathVariable Long id) { return BugResponseDTO.from(service.buscarPorId(id)); }
-    @PostMapping @ResponseStatus(HttpStatus.CREATED)
-    public BugResponseDTO criar(@Valid @RequestBody BugRequestDTO dto) { return BugResponseDTO.from(service.criar(dto)); }
-    @PutMapping("/{id}") public BugResponseDTO atualizar(@PathVariable Long id, @Valid @RequestBody BugRequestDTO dto) { return BugResponseDTO.from(service.atualizar(id, dto)); }
-    @DeleteMapping("/{id}") @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void excluir(@PathVariable Long id) { service.excluir(id); }
+    public BugController(BugService service) {
+        this.service = service;
+    }
+
+    @GetMapping
+    public List<BugResponseDTO> listar() {
+        return service.listarTodos().stream().map(BugResponseDTO::from).toList();
+    }
+
+    @GetMapping("/{id}")
+    public BugResponseDTO buscar(@PathVariable Long id) {
+        return BugResponseDTO.from(service.buscarPorId(id));
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public BugResponseDTO criar(@Valid @RequestBody BugRequestDTO dto) {
+        return BugResponseDTO.from(service.criar(dto));
+    }
+
+    @PutMapping("/{id}")
+    public BugResponseDTO atualizar(@PathVariable Long id, @Valid @RequestBody BugRequestDTO dto) {
+        return BugResponseDTO.from(service.atualizar(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void excluir(@PathVariable Long id) {
+        service.excluir(id);
+    }
 }

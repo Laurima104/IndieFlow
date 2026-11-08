@@ -19,25 +19,20 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tarefa")
 public class Tarefa {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false, length = 100)
     private String titulo;
-
     @Column(length = 500)
     private String descricao;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private Prioridade prioridade;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatusTarefa status;
-
+    @Column (nullable = false)
     private LocalDate prazo;
 
     @ManyToOne

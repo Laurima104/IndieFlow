@@ -23,34 +23,41 @@ public class BugService {
     }
 
     @Transactional(readOnly = true)
-    public List<Bug> listarTodos() { return bugs.findAll(); }
+    public List<Bug> listarTodos() {
+        return bugs.findAll();
+    }
 
     @Transactional(readOnly = true)
     public Bug buscarPorId(Long id) {
-        return bugs.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Bug " + id + " não encontrado"));
+        return bugs.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Bug " + id + " não encontrado"));
     }
 
     public Bug criar(BugRequestDTO dto) {
         Bug bug = new Bug();
-        aplicar(bug, dto);
+        bug = aplicar(bug, dto);
         return bugs.save(bug);
     }
 
     public Bug atualizar(Long id, BugRequestDTO dto) {
         Bug bug = buscarPorId(id);
-        aplicar(bug, dto);
+        bug = aplicar(bug, dto);
         return bugs.save(bug);
     }
 
-    public void excluir(Long id) { bugs.delete(buscarPorId(id)); }
+    public void excluir(Long id) {
+        bugs.delete(buscarPorId(id));
+    }
 
-    private void aplicar(Bug bug, BugRequestDTO dto) {
+    private Bug aplicar(Bug bug, BugRequestDTO dto) {
         Projeto projeto = projetos.findById(dto.projetoId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projeto " + dto.projetoId() + " não encontrado"));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Projeto " + dto.projetoId() + " não encontrado"));
         bug.setTitulo(dto.titulo().trim());
         bug.setDescricao(dto.descricao());
         bug.setGravidade(dto.gravidade());
         bug.setStatus(dto.status());
         bug.setProjeto(projeto);
+        return bug;
     }
 }
