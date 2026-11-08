@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import com.indieflow.dto.tarefa.TarefaRequestDTO;
+import com.indieflow.enums.Prioridade;
+import com.indieflow.enums.StatusTarefa;
 import com.indieflow.model.Membro;
 import com.indieflow.model.Projeto;
 import com.indieflow.model.Tarefa;
@@ -28,6 +30,18 @@ public class TarefaService {
 
     @Transactional(readOnly = true)
     public List<Tarefa> listarTodos() { return tarefas.findAll(); }
+
+    @Transactional(readOnly = true)
+    public List<Tarefa> listarPorStatus(StatusTarefa status) { return tarefas.findByStatus(status); }
+
+    @Transactional(readOnly = true)
+    public List<Tarefa> listarPorPrioridade(Prioridade prioridade) { return tarefas.findByPrioridade(prioridade); }
+
+    @Transactional(readOnly = true)
+    public List<Tarefa> listarPorProjeto(Long projetoId) { return tarefas.findByProjeto_Id(projetoId); }
+
+    @Transactional(readOnly = true)
+    public List<Tarefa> listarPorMembro(Long membroId) { return tarefas.findByMembro_Id(membroId); }
 
     @Transactional(readOnly = true)
     public Tarefa buscarPorId(Long id) {
