@@ -33,6 +33,10 @@ public class ProjetoService {
             ));
     }
 
+    public List<Projeto> buscarPorStatus(StatusProjeto status){
+        return projetoRepository.findByStatus(status);
+    }
+
     public Projeto iniciarProjeto(Projeto projeto){
         projeto.setData_inicio(LocalDate.now());
         projeto.setStatus(StatusProjeto.PLANEJAMENTO);

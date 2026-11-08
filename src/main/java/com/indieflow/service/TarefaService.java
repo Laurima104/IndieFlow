@@ -2,11 +2,14 @@ package com.indieflow.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.indieflow.enums.Prioridade;
 import com.indieflow.enums.StatusTarefa;
 import com.indieflow.model.Tarefa;
 import com.indieflow.repository.TarefaRepository;
 
+@Service 
 public class TarefaService {
     private final TarefaRepository tarefaRepository;
     public TarefaService(TarefaRepository tarefaRepository){
