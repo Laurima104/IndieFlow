@@ -5,14 +5,40 @@ import java.time.LocalDate;
 import com.indieflow.enums.Prioridade;
 import com.indieflow.enums.StatusTarefa;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity 
+@Table (name="tarefa")
 public class Tarefa {
+    @Id 
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column (nullable = false, length = 50)
     private String titulo;
+    @Column (length = 250)
     private String descricao;
+    @Enumerated (EnumType.STRING)
+    @Column (nullable = false, length = 10)
     private Prioridade prioridade;
+    @Column (nullable = false, length = 15)
     private StatusTarefa status;
+    @Column (nullable = false)
     private LocalDate prazo;
+
+    @ManyToOne
+    @JoinColumn (name="membro_id")
     private Membro membro;
+    @ManyToOne 
+    @JoinColumn (name="projeto_id", nullable = false)
     private Projeto projeto;
 
     public void setId(Long id) {
